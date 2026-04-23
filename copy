@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
+#define MAX_EVENTS 100
+#define TEXT_SIZE  100
+
+struct Event {
+    int day, month, year;
+    char text[TEXT_SIZE];
+};
+
+struct Event events[MAX_EVENTS];
+int event_count = 0;
+
+int is_leap(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+int days_in_month(int month, int year) {
+    static int dim[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    if (month == 2) return dim[1] + is_leap(year);
+    return dim[month - 1];
+}
+
+void add_event(int day, int month, int year, char *text) {
+    if (event_count >= MAX_EVENTS) {
+        printf("Event list is full!\n");
+        return;
+    }
+    events[event_count].day = day;
+    events[event_count].month = month;
+    events[event_count].year = year;
+    strcpy(events[event_count].text, text);
+    event_count++;
+}
+
+void show_events(int month, int year) {
+    printf("\n--- Events for %02d/%04d ---\n", month, year);
+
+    int found = 0;
+    for (int i = 0; i < event_count; i++) {
+        if (events[i].month == month && events[i].year == year) {
+            printf("%02d: %s\n", events[i].day, events[i].text);
+            found = 1;
+        }
+    }
+
+    if (!found) {
+        printf("No events.\n");
+    }
+}
+
+void print_month(int month, int year) {
+    time_t t = time(NULL);
+    struct tm today;
+    localtime_r(&t, &today);
+
+    int today_day   = today.tm_mday;
+    int today_month = today.tm_mon + 1;
+    int today_year  = today.tm_year + 1900;
+
+    struct tm tm_first = {0};
+    tm_first.tm_mday = 1;
+    tm_first.tm_mon  = month - 1;
+    tm_first.tm_year = year - 1900;
+    tm_first.tm_hour = 12;
+
+    mktime(&tm_first);
+    int start_wday = tm_first.tm_wday;
+    int dim = days_in_month(month, year);
+
+    const char *months[] = {
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    };
+
+    printf("\n     %s %d\n", months[month-1], year);
+    printf(" Su Mo Tu We Th Fr Sa\n");
+
+    int day;
+    for (day = 0; day < start_wday; ++day) printf("   ");
+
+    for (int d = 1; d <= dim; d++) {
+
+        int is_today = (d == today_day &&
+                        month == today_month &&
+                        year == today_year);
+
+        int has_event = 0;
+        for (int i = 0; i < event_count; i++) {
+            if (events[i].day == d &&
+                events[i].month == month &&
+                events[i].year == year) {
+                has_event = 1;
+                break;
+            }
+        }
+
+        if (is_today) {
+            printf("\033[1;32m%3d\033[0m", d); // green
+        }
+        else if (has_event) {
+            printf("\033[1;34m%3d\033[0m", d); // blue
+        }
+        else {
+            printf("%3d", d);
+        }
+
+        day++;
+        if (day % 7 == 0) printf("\n");
+    }
+
+    if (day % 7 != 0) printf("\n");
+
+    show_events(month, year);
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n--- Calendar & Event Planner ---\n");
+        printf("1. View Calendar\n");
+        printf("2. Add Event\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            int month, year;
+            printf("Enter month and year (e.g. 11 2025). 0 0 = current: ");
+            scanf("%d %d", &month, &year);
+
+            if (month == 0 && year == 0) {
+                time_t t = time(NULL);
+                struct tm now;
+                localtime_r(&t, &now);
+                month = now.tm_mon + 1;
+                year  = now.tm_year + 1900;
+            }
+
+            print_month(month, year);
+        }
+
+        else if (choice == 2) {
+            int d, m, y;
+            char text[TEXT_SIZE];
+
+            printf("Enter day month year (e.g. 10 11 2025): ");
+            scanf("%d %d %d", &d, &m, &y);
+
+            printf("Enter event text: ");
+            getchar();        
+            fgets(text, TEXT_SIZE, stdin);
+            text[strcspn(text, "\n")] = '\0'; 
+
+            add_event(d, m, y, text);
+            printf("Event added!\n");
+        }
+
+        else if (choice == 3) {
+            printf("Goodbye!\n");
+            break;
+        }
+
+        else {
+            printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}

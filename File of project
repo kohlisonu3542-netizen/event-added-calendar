@@ -1,0 +1,151 @@
+Chapter 1: Introduction
+1.1 Overview of the Project
+
+The project is a simple calendar system that allows the user to input an event for each month of the year and check for any events they’ve scheduled. The program is designed to function for two years (2025 and 2026) and allows the user to view the calendar for any selected month, add an event on a specified date, and view the event they’ve added. This program is implemented in C programming language and works via the command line interface.
+
+1.2 Objective of the Project
+
+The main objective of this project is to create an interactive, year-based calendar that can display monthly calendars for the years 2025 and 2026. The system allows users to add events for a given date and then check or review those events. The project aims to:
+
+Provide an intuitive calendar view for any month.
+
+Allow users to add, check, and manage events for each date of the calendar.
+
+Implement the system in C programming, demonstrating the use of arrays, user input, and control structures such as switch, if, and for loops.
+
+1.3 Problem Statement
+
+Manual planning and tracking of events can be time-consuming and prone to errors. There is a need for an efficient and easy-to-use system where users can manage their schedules in a more organized manner. The system should be capable of handling multiple events for each date and allow users to check and modify those events as needed.
+
+1.4 Scope of the Project
+
+This system is designed for users who need to organize their events and plan ahead using a calendar system. The functionality is limited to the calendar years 2025 and 2026, but the structure can be expanded for future years.
+
+Chapter 2: System Analysis
+2.1 Existing Systems and Limitations
+
+Before the development of this system, people would usually rely on paper-based calendars or simple digital applications to manage events. However, these methods lack integration with a digital interface and cannot easily show a detailed view of scheduled events. Existing digital solutions are often complex or overly specific to certain use cases, while a general-purpose calendar system like this one can provide a more streamlined experience.
+
+2.2 Feasibility Study
+
+The feasibility study includes technical, operational, and financial factors. This project uses basic C programming, which makes it feasible for implementation without requiring any advanced hardware or software. The code primarily uses simple data structures like arrays and strings, making it lightweight and efficient. Additionally, the program can be executed on any standard system that supports C programming.
+
+2.3 System Requirements
+
+Hardware Requirements:
+
+A computer or device with the capability to run a C programming environment (e.g., a compiler like GCC).
+
+Software Requirements:
+
+A text editor (e.g., Visual Studio Code, Notepad++).
+
+C programming environment with a C compiler.
+
+Chapter 3: System Design
+3.1 System Architecture
+
+The system is designed with a modular structure, where each month’s calendar and event functionality is separated into different cases under a switch statement. This approach makes the system scalable and easier to maintain. Below is the general architecture:
+
+Input Handling: The program prompts the user to input the year and then the month, followed by an option to add or check events.
+
+Calendar Display: Based on the user's input, the program displays the calendar of the selected month with the days properly arranged in a weekly format.
+
+Event Management: After the calendar is displayed, users are prompted to either add an event on a specific date or check existing events.
+
+3.2 Data Flow Diagram (DFD)
+
+Level 1 DFD:
+
+User Input: Year and month selection.
+
+Process: Display the calendar of the selected month.
+
+User Input: Event creation and checking.
+
+Level 2 DFD:
+
+Event management allows users to add events to specific dates and view added events.
+
+The calendar displays the event dates for each month.
+
+3.3 System Modules
+
+Year Selection: Allows users to select the year (2025 or 2026).
+
+Month Calendar Display: Displays the calendar for a selected month, formatted in a weekly layout.
+
+Event Addition: After selecting a month, the user can input events for a particular day and view them afterward.
+
+Chapter 4: Implementation & Testing
+4.1 Implementation
+
+The system is developed using C programming language. The main components of the implementation include:
+
+Arrays: For storing the days of each month (represented as a 2D array).
+
+Switch-Case Structure: For handling different months of the year, as well as options for adding or checking events.
+
+User Input: For accepting inputs related to the year, month, and event details.
+
+The implementation process followed these steps:
+
+Input Year: The program prompts the user to input the year (2025 or 2026).
+
+Select Month: The user selects the month for which they wish to view the calendar.
+
+Event Management: The user can add an event or check an existing event.
+
+4.2 Testing
+
+Test 1: Year Selection: Tested the functionality where the user selects the year, and the program correctly asks for the month.
+
+Test 2: Month Calendar Display: Ensured that each month’s calendar is displayed correctly for both 2025 and 2026.
+
+Test 3: Event Addition: Verified that the user could successfully add an event to a specific date.
+
+Test 4: Event Checking: Tested the functionality to view added events and confirmed the correct event was displayed.
+
+4.3 Challenges Faced
+
+During the implementation, several challenges were encountered:
+
+Handling leap years correctly, especially for February.
+
+Ensuring the correct formatting of the calendar with days arranged properly.
+
+Managing the input and validation for events in a user-friendly manner.
+
+Chapter 5: Results & Discussion
+5.1 Results
+
+After completing the implementation and testing phases, the system functions as expected:
+
+It displays a monthly calendar for 2025 and 2026.
+
+The user can add events to any date, and the events are stored for that date.
+
+The user can later view any events that were added previously.
+
+5.2 Discussion
+
+The calendar system has proven effective for personal event management. However, it has some limitations:
+
+The events are stored in the same session and are lost once the program ends. Implementing file storage for persistent event data would be a useful enhancement.
+
+The user interface is simple, relying on text-based prompts and outputs. A graphical user interface (GUI) could provide a more intuitive and user-friendly experience.
+
+Chapter 6: Conclusion & Future Scope
+6.1 Conclusion
+
+The calendar system is successfully implemented and fulfills the requirements of displaying monthly calendars and managing events. The system is a functional, simple tool for personal event management.
+
+6.2 Future Scope
+
+The project can be expanded in several ways:
+
+File Storage: Implement file handling to save events permanently, so users can access their events across sessions.
+
+User Interface: A graphical interface can be developed using libraries like GTK or Qt to make the system more user-friendly.
+
+Multi-Year Support: Extend the calendar for additional years and dynamically adjust the day calculations for each month.
